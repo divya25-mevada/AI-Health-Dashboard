@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Health AI Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .logo-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4a5568;
+            margin-bottom: 5px;
+        }
+
+        .logo-subtitle {
+            color: #718096;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 8px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            color: #2d3748;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: white;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .form-input:focus + .input-icon {
+            color: #667eea;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+
+        .divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .register-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .register-link a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .alert {
+            background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+            color: #742a2a;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 4px solid #e53e3e;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-icon {
+            font-size: 18px;
+            color: #e53e3e;
+        }
+
+        .features-section {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .features-title {
+            text-align: center;
+            color: #4a5568;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            font-size: 13px;
+            color: #718096;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-icon {
+            color: #667eea;
+            font-size: 14px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #a0aec0;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: #667eea;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            .logo-title {
+                font-size: 1.5rem;
+            }
+
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading State */
+        .login-btn.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .login-btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo-section">
+            <div class="logo-icon">
+                <i class="fas fa-heartbeat"></i>
+            </div>
+            <h1 class="logo-title">Health AI</h1>
+            <p class="logo-subtitle">Your Personal Health Assistant</p>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert">
+                    <i class="fas fa-exclamation-triangle alert-icon"></i>
+                    <span>{{ messages[0] }}</span>
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="post" id="loginForm">
+            <div class="form-group">
+                <label class="form-label">Username</label>
+                <div style="position: relative;">
+                    <input type="text" class="form-input" name="username" placeholder="Enter your username" required>
+                    <i class="fas fa-user input-icon"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <div style="position: relative;">
+                    <input type="password" class="form-input" name="password" id="passwordField" placeholder="Enter your password" required>
+                    <i class="fas fa-lock input-icon"></i>
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword()" id="passwordToggle"></i>
+                </div>
+            </div>
+
+            <button type="submit" class="login-btn" id="loginButton">
+                <i class="fas fa-sign-in-alt"></i> Sign In
+            </button>
+        </form>
+
+        <div class="divider">
+            <span>New to Health AI?</span>
+        </div>
+
+        <div class="register-link">
+            <p>Don't have an account? <a href="/register">Create Account</a></p>
+        </div>
+
+        <div class="features-section">
+            <div class="features-title">What you'll get access to:</div>
+            <div class="features-list">
+                <div class="feature-item">
+                    <i class="fas fa-chart-line feature-icon"></i>
+                    <span>Health Analytics</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-robot feature-icon"></i>
+                    <span>AI Assistant</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt feature-icon"></i>
+                    <span>Secure Data</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-mobile-alt feature-icon"></i>
+                    <span>Mobile Ready</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById('passwordField');
+            const passwordToggle = document.getElementById('passwordToggle');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                passwordToggle.classList.remove('fa-eye');
+                passwordToggle.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                passwordToggle.classList.remove('fa-eye-slash');
+                passwordToggle.classList.add('fa-eye');
+            }
+        }
+
+        // Add loading state to login button
+        document.getElementById('loginForm').addEventListener('submit', function() {
+            const loginButton = document.getElementById('loginButton');
+            loginButton.classList.add('loading');
+            loginButton.disabled = true;
+        });
+
+        // Add input focus animations
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        // Add enter key support
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('loginForm').requestSubmit();
+            }
+        });
+    </script>
+</body>
+</html>
